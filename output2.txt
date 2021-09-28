@@ -4,5 +4,5 @@ Program 2: Squares
   1         1                1               1
   2         5                5               5
   3        14               14              14
-  4        30               30              30
-  5        55               55              55
+ -1     ERROR            ERROR           ERROR
+101     ERROR            ERROR           ERROR

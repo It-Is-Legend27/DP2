@@ -21,14 +21,14 @@ const int MIN = 1;   // Minimum value for n
 const int MAX = 100; // Maximum value for n
 
 // Purpose:  Prompts user for names of input & output file, then opens them.
-// Receives: ifstream object by reference, input file, 
+// Receives: ifstream object by reference, input file,
 //           ofstream object by reference, output file
 // Returns:  ifstream and ofstream by reference (input and output file)
 void openFiles(ifstream &infile, ofstream &outfile);
 
-// Purpose: Prints headers to output file
-//
-//
+// Purpose:  Prints headers to output file
+// Receives: ofstream object by reference, output file
+// Returns:  ofstream object by reference, output file
 void printHeader(ofstream &outfile);
 
 // Purpose:  Calculates the sum of n * n (iteratively)
@@ -46,24 +46,38 @@ int recSoln(int n);
 // Returns:  int sum, sum of n * n
 int closed(int n);
 
+// Purpose:  Determines whether n is 1 <= n <= 100
+// Receives: int n by value, an integer
+// Returns:  bool value 0 or 1, 1 if valid, 0 if invalid
+bool isValid(int n);
+
 int main()
 {
-    ifstream infile("myInput.txt");
-    ofstream outfile("output2.txt");
-    //openFiles(infile, outfile);
+    ifstream infile;
+    ofstream outfile;
+    int numInts, n;
+    
+    openFiles(infile, outfile);
 
     // Prints headers to output file
     printHeader(outfile);
-    
-    int numInts;
+
     infile >> numInts;
-    int n;
-    
-    for(int i = 0; i < numInts; i++)
+
+    for (int i = 0; i < numInts; i++)
     {
         infile >> n;
-        outfile << right << setw(3) << n << setw(10) << loopSum(n) 
-          << setw(17) << recSoln(n) << setw(16) << closed(n) << '\n';
+
+        if (isValid(n)) // If 1 <= n <= 100
+        {
+            outfile << right << setw(3) << n << setw(10) << loopSum(n)
+                    << setw(17) << recSoln(n) << setw(16) << closed(n) << '\n';
+        }
+        else // If n < 1 or n > 100
+        {
+            outfile << right << setw(3) << n << setw(10) << "ERROR"
+                    << setw(17) << "ERROR" << setw(16) << "ERROR" << '\n';
+        }
     }
 
     infile.close();
@@ -71,9 +85,8 @@ int main()
     return 0;
 }
 
-
 // Purpose:  Prompts user for names of input & output file, then opens them.
-// Receives: ifstream object by reference, input file, 
+// Receives: ifstream object by reference, input file,
 //           ofstream object by reference, output file
 // Returns:  ifstream and ofstream by reference (input and output file)
 void openFiles(ifstream &infile, ofstream &outfile)
@@ -91,14 +104,15 @@ void openFiles(ifstream &infile, ofstream &outfile)
     outfile.open(outFileName); //open output file
 }
 
-//
-//
-//
+// Purpose:  Prints headers to output file
+// Receives: ofstream object by reference, output file
+// Returns:  ofstream object by reference, output file
 void printHeader(ofstream &outfile)
 {
-  outfile << "Angel Badillo\n" << "Program 2: Squares\n";
-  outfile << setw(3) << "N" << setw(10) << "LoopSum" 
-    << setw(17) << "RecSoln" << setw(17) << "Closed\n";
+    outfile << "Angel Badillo\n"
+            << "Program 2: Squares\n";
+    outfile << setw(3) << "N" << setw(10) << "LoopSum"
+            << setw(17) << "RecSoln" << setw(17) << "Closed\n";
 }
 
 // Purpose:  Calculates the sum of n * n (iteratively)
@@ -108,17 +122,11 @@ int loopSum(int n)
 {
     int sum = 0;
 
-    if(n < MIN || n > MAX) // Value not in range
+    for (int i = MIN; i <= n; i++)
     {
-        return -1;
+        sum += i * i;
     }
-    else // In range
-    {
-        for (int i = MIN; i <= n; i++) //
-        {
-            sum += i * i;
-        }
-    }
+
     return sum;
 }
 
@@ -127,15 +135,11 @@ int loopSum(int n)
 // Returns: int sum, sum of n * n
 int recSoln(int n)
 {
-    if(n < MIN || n > MAX) // Value not in range
+    if (n == MIN) // Base case
     {
-        return -1;
+        return n * n;
     }
-    else if(n == MIN) // Base case
-    {
-        return n*n;
-    }
-    return n*n + recSoln(n-1);
+    return n * n + recSoln(n - 1);
 }
 
 // Purpose:  Calculates the sum of n * n (closed form)
@@ -144,14 +148,14 @@ int recSoln(int n)
 int closed(int n)
 {
     int sum = 0;
-    
-    if(n < MIN || n > MAX) // Value not in range
-    {
-        return -1;
-    }
-    else
-    {
-        sum = n * (n + 1) * ((2 * n) + 1) / 6;
-    }
+    sum = n * (n + 1) * ((2 * n) + 1) / 6;
     return sum;
+}
+
+// Purpose:  Determines whether n is 1 <= n <= 100
+// Receives: int n by value, an integer
+// Returns:  bool value 0 or 1, 1 if valid, 0 if invalid
+bool isValid(int n)
+{
+    return MIN <= n && n <= MAX;
 }
