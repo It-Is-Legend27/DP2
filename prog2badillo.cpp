@@ -11,10 +11,14 @@
 *****************************************************************************/
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 
 using namespace std;
+
+const int MIN = 1;
+const int MAX = 100;
 
 // Purpose:  Prompts user for names of input & output file, then opens them.
 // Receives: ifstream object by reference, input file, 
@@ -22,20 +26,20 @@ using namespace std;
 // Returns:  ifstream and ofstream by reference (input and output file)
 void openFiles(ifstream &infile, ofstream &outfile);
 
-// Purpose:
-// Receives:
-// Returns:
-int sumIt(int n);
+// Purpose:  Calculates the sum of n * n (iteratively)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns:  int sum, sum of n * n
+int loopSum(int n);
 
-// Purpose:
-// Receives:
-// Returns:
-int sumRec(int n);
+// Purpose:  Calculates the sum of n * n (recursively)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns:  int sum, sum of n * n
+int recSoln(int n);
 
-// Purpose:
-// Receives:
-// Returns:
-int sumClose(int n);
+// Purpose:  Calculates the sum of n * n (closed form)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns:  int sum, sum of n * n
+int closed(int n);
 
 int main()
 {
@@ -43,9 +47,19 @@ int main()
     ofstream outfile;
     openFiles(infile, outfile);
 
+    outfile << "Angel Badillo\n" << "Program 2: Squares\n"; // Print header
+    outfile << right << "N" << setw(10) << "LoopSum" << setw(15) << "RecSoln" << setw(15) << "Closed\n";
+    int numInts;
+    infile >> numInts; // num of ints in input file
+    int n; // value of n
+    
+    for(int i = 0; i < numInts; i++)
+    {
+        infile >> n;
+        outfile << right << n << setw(10) << loopSum(n) << setw(15) << recSoln(n) << setw(15) << closed(n) << '\n';
 
-
-
+        
+    }
 
     infile.close();
     outfile.close();
@@ -69,5 +83,60 @@ void openFiles(ifstream &infile, ofstream &outfile)
     cout << "Enter the output filename: ";
 
     cin >> outFileName;
-    outfile.open(outFileName); //open out putfile
+    outfile.open(outFileName); //open output file
+}
+
+// Purpose:  Calculates the sum of n * n (iteratively)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns:  int sum, sum of n * n
+int loopSum(int n)
+{
+    int sum = 0;
+
+    if(n < MIN || n > MAX) // Value not in range
+    {
+        return -1;
+    }
+    else // In range
+    {
+        for (int i = MIN; i <= n; i++) //
+        {
+            sum += i * i;
+        }
+    }
+    return sum;
+}
+
+// Purpose:  Calculates the sum of n * n (recursively)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns: int sum, sum of n * n
+int recSoln(int n)
+{
+    if(n < MIN || n > MAX) // Value not in range
+    {
+        return -1;
+    }
+    else if(n == MIN) // Base case
+    {
+        return n*n;
+    }
+    return n*n + recSoln(n-1);
+}
+
+// Purpose:  Calculates the sum of n * n (closed form)
+// Receives: int n, an integer 1 <= n <= 100
+// Returns:  int sum, sum of n * n
+int closed(int n)
+{
+    int sum = 0;
+    
+    if(n < MIN || n > MAX) // Value not in range
+    {
+        return -1;
+    }
+    else
+    {
+        sum = n * (n + 1) * ((2 * n) + 1) / 6;
+    }
+    return sum;
 }
