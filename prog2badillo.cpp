@@ -17,14 +17,19 @@
 
 using namespace std;
 
-const int MIN = 1;
-const int MAX = 100;
+const int MIN = 1;   // Minimum value for n
+const int MAX = 100; // Maximum value for n
 
 // Purpose:  Prompts user for names of input & output file, then opens them.
 // Receives: ifstream object by reference, input file, 
 //           ofstream object by reference, output file
 // Returns:  ifstream and ofstream by reference (input and output file)
 void openFiles(ifstream &infile, ofstream &outfile);
+
+// Purpose: Prints headers to output file
+//
+//
+void printHeader(ofstream &outfile);
 
 // Purpose:  Calculates the sum of n * n (iteratively)
 // Receives: int n, an integer 1 <= n <= 100
@@ -43,22 +48,22 @@ int closed(int n);
 
 int main()
 {
-    ifstream infile;
-    ofstream outfile;
-    openFiles(infile, outfile);
+    ifstream infile("myInput.txt");
+    ofstream outfile("output2.txt");
+    //openFiles(infile, outfile);
 
-    outfile << "Angel Badillo\n" << "Program 2: Squares\n"; // Print header
-    outfile << right << "N" << setw(10) << "LoopSum" << setw(15) << "RecSoln" << setw(15) << "Closed\n";
+    // Prints headers to output file
+    printHeader(outfile);
+    
     int numInts;
-    infile >> numInts; // num of ints in input file
-    int n; // value of n
+    infile >> numInts;
+    int n;
     
     for(int i = 0; i < numInts; i++)
     {
         infile >> n;
-        outfile << right << n << setw(10) << loopSum(n) << setw(15) << recSoln(n) << setw(15) << closed(n) << '\n';
-
-        
+        outfile << right << setw(3) << n << setw(10) << loopSum(n) 
+          << setw(17) << recSoln(n) << setw(16) << closed(n) << '\n';
     }
 
     infile.close();
@@ -84,6 +89,16 @@ void openFiles(ifstream &infile, ofstream &outfile)
 
     cin >> outFileName;
     outfile.open(outFileName); //open output file
+}
+
+//
+//
+//
+void printHeader(ofstream &outfile)
+{
+  outfile << "Angel Badillo\n" << "Program 2: Squares\n";
+  outfile << setw(3) << "N" << setw(10) << "LoopSum" 
+    << setw(17) << "RecSoln" << setw(17) << "Closed\n";
 }
 
 // Purpose:  Calculates the sum of n * n (iteratively)
