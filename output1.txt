@@ -1,9 +1,0 @@
-Angel Badillo
-Program 2: Squares
-  N   LoopSum          RecSoln          Closed
- 10       385              385             385
-  1         1                1               1
-  2         5                5               5
-  3        14               14              14
-  7       140              140             140
- 14      1015             1015            1015

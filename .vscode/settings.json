@@ -2,4 +2,12 @@
     "files.associations": {
         "iosfwd": "cpp"
     }
+
+    ,
+    
+    // This makes code runner work nicely
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ *.cpp -o main && ./main"
+    }
+
 }
