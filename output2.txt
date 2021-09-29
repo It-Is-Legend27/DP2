@@ -1,8 +1,9 @@
 Angel Badillo
 Program 2: Squares
   N   LoopSum          RecSoln          Closed
-  1         1                1               1
-  2         5                5               5
-  3        14               14              14
- -1     ERROR            ERROR           ERROR
-101     ERROR            ERROR           ERROR
+  6        91               91              91
+  8       204              204             204
+  9       285              285             285
+ 25      5525             5525            5525
+ 11       506              506             506
+ 12       650              650             650
