@@ -6,7 +6,10 @@
 * Purpose: This program finds the numbers of squares in a grid of N * N,
 *          (sum of n^2), for 1 <= n <= 100. Program prompts user for i/o
 *          file names, solves the sum of n^2 for each number in the input 
-*          file, then prints the solution to the output file.
+*          file, then prints the solution to the output file. The sum is
+*          calculated by 3 different functions that serve the same purpose,
+*          but have different implementations, and is printed to the output
+*          file for each function.
 *
 *****************************************************************************/
 
@@ -25,7 +28,6 @@ const int MAX = 100; // Maximum value for n
 //           ofstream object by reference, output file
 // Returns:  ifstream and ofstream by reference (input and output file)
 void openFiles(ifstream &infile, ofstream &outfile);
-
 
 // Purpose:  Calculates the sum of n * n (iteratively)
 // Receives: int n, an integer 1 <= n <= 100
@@ -63,7 +65,6 @@ int main()
     outfile << setw(3) << "N" << setw(10) << "LoopSum"
             << setw(17) << "RecSoln" << setw(17) << "Closed\n";
 
-    // Number of integers in input file
     infile >> numInts;
 
     // Loops for every int in the file
@@ -74,8 +75,9 @@ int main()
         // If valid, prints out n, then sum calculated via 3 different ways
         if (isValid(n))
         {
-            outfile << right << setw(3) << n << setw(10) << loopSum(n)
-                    << setw(17) << recSum(n) << setw(16) << closedSum(n) << '\n';
+            outfile << right << setw(3) << n << setw(10)
+                    << loopSum(n) << setw(17) << recSum(n)
+                    << setw(16) << closedSum(n) << '\n';
         }
         // If invalid input, prints out n and error message
         else
@@ -97,16 +99,16 @@ int main()
 void openFiles(ifstream &infile, ofstream &outfile)
 {
     string inFileName;  // std::strings are better
-    string outFileName; // in my opinion v. c-string
+    string outFileName; // in my opinion v. c-strings
 
     cout << "Enter the input filename: ";
     cin >> inFileName;
 
-    infile.open(inFileName); //open input file
+    infile.open(inFileName); // Open input file
     cout << "Enter the output filename: ";
 
     cin >> outFileName;
-    outfile.open(outFileName); //open output file
+    outfile.open(outFileName); // Open output file
 }
 
 // Purpose:  Calculates the sum of n * n (iteratively)
@@ -116,9 +118,10 @@ int loopSum(int n)
 {
     int sum = 0;
 
+    // Adds i^2, with sum of prev i^2, where i increase 1 every iteration
     for (int i = MIN; i <= n; i++)
     {
-        sum += i * i;
+        sum += i * i; // Adds last i^2 to prev sum of i^2
     }
 
     return sum;
@@ -126,14 +129,14 @@ int loopSum(int n)
 
 // Purpose:  Calculates the sum of n * n (recursively)
 // Receives: int n, an integer 1 <= n <= 100
-// Returns: int, sum of n * n
+// Returns:  int, sum of n * n
 int recSum(int n)
 {
-    if (n == MIN) // Base case
+    if (n == MIN)     // Base case
     {
-        return n * n;
+        return n * n; // 1^2, or 1
     }
-    return n * n + recSum(n - 1);
+    return n * n + recSum(n - 1); // Adds last n^2 to sum of previous n^2
 }
 
 // Purpose:  Calculates the sum of n * n (closed form)
