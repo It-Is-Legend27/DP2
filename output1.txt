@@ -1,5 +1,6 @@
 Angel Badillo
 Program 2: Squares
+
   N   LoopSum          RecSoln          Closed
  10       385              385             385
   1         1                1               1

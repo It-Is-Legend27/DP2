@@ -61,7 +61,7 @@ int main()
 
     // Prints header and column names to output file
     outfile << "Angel Badillo\n"
-            << "Program 2: Squares\n";
+            << "Program 2: Squares\n\n";
     outfile << setw(3) << "N" << setw(10) << "LoopSum"
             << setw(17) << "RecSoln" << setw(17) << "Closed\n";
 
@@ -101,11 +101,11 @@ void openFiles(ifstream &infile, ofstream &outfile)
     string inFileName;  // std::strings are better
     string outFileName; // in my opinion v. c-strings
 
-    cout << "Enter the input filename: ";
+    cout << "Enter the input file name: ";
     cin >> inFileName;
 
     infile.open(inFileName); // Open input file
-    cout << "Enter the output filename: ";
+    cout << "Enter the output file name: ";
 
     cin >> outFileName;
     outfile.open(outFileName); // Open output file
